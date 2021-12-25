@@ -1,0 +1,109 @@
+// JavaScript Document
+(function( $ ){
+    $.fn.reset_all = function() {
+        if($(window).width()>1025) {
+            $('#site-navigation').show().addClass('closed');
+            $('#masthead .site-header-menu .menu-toggle').removeClass('open');    
+        }else{
+            if($('#site-navigation').hasClass('closed') ) {
+                $('#site-navigation').hide();
+            }
+        }
+        if($(window).width()>426 && $('#masthead .search-form').hasClass('float')) {
+            $('#masthead .search-form').removeClass('float');
+        }
+    };
+
+    $(document).ready(
+        function(e)
+        {
+            $('body').reset_all();
+            $('#masthead .site-header-menu .menu-toggle').bind(
+                'click',function(){
+                    if($(this).hasClass('open') ) {
+                        $('#site-navigation').slideUp(300).addClass('closed')
+                        $(this).removeClass('open');
+                    }else{
+                        $('#site-navigation').slideDown(300).removeClass('closed');
+                        $(this).addClass('open');
+                    }
+                    return false;
+                }
+            );
+            $('#search-toggle').bind('click',function(){
+                    if($(window).width()<535 && !$('#masthead .search-form').hasClass('float')) {
+                        $('#masthead .search-form').addClass('float');
+                        $('#masthead .search-field').focus();
+                    }else{
+                        $('#masthead .search-form').removeClass('float');
+                    }
+                }
+            );
+				 $(".search-field").attr("placeholder",'请输入课程名称...')
+				 $(".search-submit").click(function(){
+					 var old = $(this).prev().val()
+					 $(".search-field").val(old.replace(/[()（）]/g,' '))
+				 })
+			firstFlag = true
+			timerflag = 0
+			$('.zhi12-popup').click(function(){
+				let that = this
+				if(firstFlag){
+					firstFlag = false
+					for(let i = 1; i < 6; i ++){
+						timerflag = setTimeout(function(){
+							
+							if(i <5){
+								$(that).text('正在跳转('+i+')')
+
+							}else{
+								firstFlag = true
+								
+								if($(that).hasClass('btn-link')){
+									$(that).text('点我支付5.00元')
+								}else{
+									$(that).text('已支付？点我输入手机号查看')
+								}
+
+							}
+
+						},i*1000)
+					}
+					return true
+				}else{
+					return false
+				}
+			})
+			
+        });
+    $(window).resize(
+        function(){
+            $('body').reset_all();
+        }
+    );
+	// 页脚菜单
+	//$(window).scroll(function () {
+		//var scrollTop = $(window).scrollTop();
+		//scrollTop > -1 ? $(".footer-nav").fadeIn(200).css("display","block") : $(".footer-nav").fadeOut(200);
+	//});
+	//返回上次浏览的位置
+
+	////localStorage 方法存储的数据没有时间限制(从localStorage获取位置数据，类似于memcached) 
+	/*$(window).scroll(function(){
+		var sortId = location.href;  //这篇文章的唯一标识id
+		var str = sortId + 'scrollTop';
+  		if($(document).scrollTop()!=0){
+    	localStorage.setItem(str, $(window).scrollTop());
+  		}
+	});
+	window.onload = function(){
+		var sortId = location.href;  //这篇文章的唯一标识id
+		var str = sortId + 'scrollTop';
+  		var offset = localStorage.getItem(str);
+  		$(document).scrollTop(offset);
+	};
+	*/
+	
+	
+	$('.subscribe').hide();
+})( jQuery );
